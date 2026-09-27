@@ -20,8 +20,11 @@ class SiteAddress
 
   attr_reader :input, :host, :path, :error
 
-  def initialize(input)
+  # limit caps what a visitor types; a result's address is read without it,
+  # since "https://" can carry a site at the limit over it.
+  def initialize(input, limit: MAX_LENGTH)
     @input = input.to_s.strip
+    @limit = limit
     @error = read
   end
 
@@ -39,7 +42,7 @@ class SiteAddress
   def matches?(address)
     return false unless valid?
 
-    other = address.is_a?(SiteAddress) ? address : SiteAddress.new(address)
+    other = address.is_a?(SiteAddress) ? address : SiteAddress.new(address, limit: nil)
     other.valid? && same_site?(other.host) && covers?(other.path)
   end
 
@@ -55,7 +58,7 @@ class SiteAddress
 
   def read
     return "Enter your site's address." if input.empty?
-    return "Keep the address under #{MAX_LENGTH} characters." if input.length > MAX_LENGTH
+    return "Keep the address under #{@limit} characters." if @limit && input.length > @limit
     return "An address has no spaces in it." if input.match?(/\s/)
 
     scheme = input[SCHEME, 1]

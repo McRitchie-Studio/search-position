@@ -73,6 +73,12 @@ class SiteAddressTest < ActiveSupport::TestCase
     assert_not SiteAddress.new("cyvasse.io").matches?("not a url")
   end
 
+  test "a site at the length limit still matches its own page, though https:// makes it longer" do
+    site = SiteAddress.new("example.com/#{"z" * (SiteAddress::MAX_LENGTH - 12)}")
+    assert site.valid?
+    assert site.matches?(site.url)
+  end
+
   test "names itself and its home page for a placed result" do
     site = SiteAddress.new("www.cyvasse.io/rules/")
     assert_equal "Cyvasse", site.name
