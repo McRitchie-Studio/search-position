@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <title><%= content_for(:title) || "Search Position" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Type a search phrase and your site's address, see where the site ranks in the top results. A demo with generated results.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+    <meta name="application-name" content="Search Position">
+    <meta property="og:title" content="Search Position">
+    <meta property="og:description" content="Where does your site rank for a search phrase? A demo with generated results.">
+    <meta property="og:type" content="website">
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <p class="demo-notice" data-demo-notice>
+      <span class="wrap"><strong>Demo.</strong> Results are generated from your phrase, not fetched from Google, and your site's position is simulated. No search API is called.</span>
+    </p>
+
+    <main class="page">
+      <%= yield %>
+    </main>
+
+    <footer class="footer">
+      <p class="wrap">
+        A 2015 weekend app, rebuilt.
+        <%= link_to "Original code on GitHub", ApplicationHelper::ORIGINAL_REPO %> ·
+        Built with <%= link_to "McRitchie Studio", "https://mcritchie.studio" %>
+      </p>
+    </footer>
+  </body>
+</html>
