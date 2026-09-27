@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
-    <title><%= content_for(:title) || "Alex McRitchie" %></title>
+    <title><%= content_for(:title) || "Search Position" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Alex McRitchie's projects since 2014, with links to the code and to live showcase rebuilds.">
+    <meta name="description" content="Type a search phrase and your site's address, see where the site ranks in the top results. A demo with generated results.">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
-    <meta name="application-name" content="Alex McRitchie">
-    <meta property="og:title" content="Alex McRitchie — Projects">
-    <meta property="og:description" content="Web apps since 2014, with links to the code and to live showcase rebuilds.">
+    <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+    <meta name="application-name" content="Search Position">
+    <meta property="og:title" content="Search Position">
+    <meta property="og:description" content="Where does your site rank for a search phrase? A demo with generated results.">
     <meta property="og:type" content="website">
     <%= csp_meta_tag %>
 
@@ -24,8 +24,20 @@
   </head>
 
   <body>
-    <div class="page">
+    <p class="demo-notice" data-demo-notice>
+      <span class="wrap"><strong>Demo.</strong> Results are generated from your phrase, not fetched from Google, and your site's position is simulated. No search API is called.</span>
+    </p>
+
+    <main class="page">
       <%= yield %>
-    </div>
+    </main>
+
+    <footer class="footer">
+      <p class="wrap">
+        A 2015 weekend app, rebuilt.
+        <%= link_to "Original code on GitHub", ApplicationHelper::ORIGINAL_REPO %> ·
+        Built with <%= link_to "McRitchie Studio", "https://mcritchie.studio" %>
+      </p>
+    </footer>
   </body>
 </html>
