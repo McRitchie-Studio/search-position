@@ -57,7 +57,7 @@ class SiteAddressTest < ActiveSupport::TestCase
       "cyvasse io" => "An address has no spaces in it.",
       "localhost" => "Enter an address like example.com.",
       "ftp://cyvasse.io" => "Use an http or https address.",
-      "user@cyvasse.io" => "Enter an address like example.com.",
+      "cyvasse_io.com" => "Enter an address like example.com.",
       "-bad-.com" => "Enter an address like example.com.",
       "cyvasse.i" => "Enter an address like example.com.",
       "#{"a" * 190}.example.com" => "Keep the address under 200 characters."
