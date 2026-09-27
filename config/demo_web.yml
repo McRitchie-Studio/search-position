@@ -1,0 +1,311 @@
+# The pages a demo results list is made from. Nothing here is fetched: the app
+# never calls a search API. For each phrase, DemoSearch orders these entries by
+# `rank` plus a jitter seeded from the phrase, keeps the first 64, and fills in
+# the placeholders, so one phrase always gives the same list.
+#
+# Fields
+#   url      the address shown; placeholders below
+#   title    the blue headline
+#   snippet  the two grey lines under it
+#   rank     where the page tends to land: 0.0 is the top of page one, 1.0 the
+#            bottom of the list (the jitter moves it by up to 0.35)
+#
+# Placeholders (every one is derived from the phrase, never from the site)
+#   %{phrase}  the phrase as searched, lower case     "cyvasse game"
+#   %{Title}   Title Case                             "Cyvasse Game"
+#   %{slug}    hyphen-joined ASCII words              "cyvasse-game"
+#   %{joined}  ASCII words with no separator          "cyvassegame"
+#   %{plus}    plus-joined, for search pages          "cyvasse+game"
+#   %{under}   Wiki_Style                             "Cyvasse_game"
+#   %{word}    the longest ASCII word                 "cyvasse"
+#   %{id}      a short id seeded from the phrase      "k3x9q2ma"
+#   %{n}       a number from 2 to 9, seeded           "5"
+#
+# Real sites appear here only as the kind of page each tends to have; the
+# paths are invented, which is why the page does not link to them. Invented
+# domains are built from the phrase and are equally fictional.
+
+- url: https://en.wikipedia.org/wiki/%{under}
+  title: "%{Title} - Wikipedia"
+  snippet: "%{Title} is the subject of this article. It covers the history, the main ideas and how %{phrase} is discussed today, with references and further reading."
+  rank: 0.0
+- url: https://www.%{joined}.com/
+  title: "%{Title} | Official Site"
+  snippet: "Everything about %{phrase} in one place: getting started, the latest news, and answers to the questions people ask most."
+  rank: 0.02
+- url: https://www.reddit.com/r/%{joined}/
+  title: "r/%{joined} - Reddit"
+  snippet: "A community for %{phrase}. Share what you have found, ask questions and see what everyone else is talking about this week."
+  rank: 0.05
+- url: https://www.youtube.com/watch?v=%{id}
+  title: "%{Title} Explained in %{n} Minutes - YouTube"
+  snippet: "A short, clear walkthrough of %{phrase} for beginners, with examples you can follow along with."
+  rank: 0.08
+- url: https://www.quora.com/What-is-the-best-way-to-learn-about-%{slug}
+  title: "What is the best way to learn about %{phrase}? - Quora"
+  snippet: "Answer (1 of %{n}): Start with the basics of %{phrase}, then find people who already know it well. Here is what worked for me."
+  rank: 0.12
+- url: https://www.britannica.com/topic/%{slug}
+  title: "%{Title} | Britannica"
+  snippet: "%{Title}, an overview of the topic, its origins and its place today, written and fact-checked by the editors."
+  rank: 0.14
+- url: https://medium.com/@%{word}writes/%{slug}-%{id}
+  title: "Everything I Learned About %{Title} | Medium"
+  snippet: "I spent a year with %{phrase}. These are the lessons, the mistakes and the one thing I wish I had known on day one."
+  rank: 0.16
+- url: https://www.wikihow.com/Get-Started-with-%{slug}
+  title: "How to Get Started with %{Title}: %{n} Simple Steps - wikiHow"
+  snippet: "New to %{phrase}? Follow these illustrated steps to get going, with tips from people who have done it before."
+  rank: 0.18
+- url: https://www.reddit.com/r/AskReddit/comments/%{id}/whats_your_experience_with_%{joined}/
+  title: "What's your experience with %{phrase}? : r/AskReddit"
+  snippet: "Honest opinions from people who have tried %{phrase}, the good and the bad. %{n}00+ comments."
+  rank: 0.2
+- url: https://github.com/topics/%{slug}
+  title: "%{slug} · GitHub Topics"
+  snippet: "Here are %{n}1 public repositories matching this topic. Browse projects, libraries and tools related to %{phrase}."
+  rank: 0.22
+- url: https://www.nytimes.com/section/%{word}
+  title: "%{Title}: Latest News and Analysis - The New York Times"
+  snippet: "News, reporting and commentary on %{phrase}, updated through the day."
+  rank: 0.24
+- url: https://www.%{word}guide.com/%{slug}
+  title: "The Complete %{Title} Guide (Updated)"
+  snippet: "Our in-depth guide to %{phrase}: what it is, how it works, what it costs and how to choose, reviewed by our editors."
+  rank: 0.25
+- url: https://stackoverflow.com/questions/tagged/%{word}
+  title: "Newest '%{word}' Questions - Stack Overflow"
+  snippet: "Questions and answers about %{word}, sorted by the newest. Ask your own question or help someone with theirs."
+  rank: 0.28
+- url: https://www.pinterest.com/ideas/%{slug}/%{n}%{n}%{n}%{n}/
+  title: "%{Title} Ideas | Pinterest"
+  snippet: "Find and save ideas about %{phrase} on Pinterest: photos, guides and inspiration."
+  rank: 0.3
+- url: https://www.amazon.com/s?k=%{plus}
+  title: "Amazon.com: %{phrase}"
+  snippet: "Shop for %{phrase} at Amazon. Free shipping on eligible orders and customer reviews to help you choose."
+  rank: 0.31
+- url: https://www.theguardian.com/%{word}
+  title: "%{Title} | The Guardian"
+  snippet: "The latest news and comment on %{phrase}."
+  rank: 0.33
+- url: https://%{joined}.fandom.com/wiki/%{under}
+  title: "%{Title} | %{Title} Wiki | Fandom"
+  snippet: "The community wiki for %{phrase}, written by fans. %{n},%{n}00 articles and counting."
+  rank: 0.34
+- url: https://www.linkedin.com/pulse/%{slug}-what-you-need-know-%{id}
+  title: "%{Title}: What You Need to Know | LinkedIn"
+  snippet: "A practical look at %{phrase} from someone who works with it every day, and why it matters for your career."
+  rank: 0.36
+- url: https://www.merriam-webster.com/dictionary/%{word}
+  title: "%{word} Definition & Meaning - Merriam-Webster"
+  snippet: "The meaning of %{word}, with examples of how it is used in a sentence and where the word comes from."
+  rank: 0.38
+- url: https://%{joined}.org/about
+  title: "About %{Title}"
+  snippet: "We are a volunteer group that shares what we know about %{phrase}. Learn who we are and how to get involved."
+  rank: 0.39
+- url: https://www.forbes.com/sites/%{word}/%{slug}-is-changing/
+  title: "Why %{Title} Is Changing, And What Comes Next - Forbes"
+  snippet: "%{Title} looks very different than it did a few years ago. Here is what has changed and who is benefiting."
+  rank: 0.41
+- url: https://news.ycombinator.com/item?id=%{n}%{n}%{n}%{n}%{n}%{n}%{n}%{n}
+  title: "Ask HN: What got you into %{phrase}? | Hacker News"
+  snippet: "%{n}%{n} points, %{n}%{n} comments. I have been curious about %{phrase} for a while and wanted to hear how others started."
+  rank: 0.43
+- url: https://www.goodreads.com/search?q=%{plus}
+  title: "Books about %{phrase} | Goodreads"
+  snippet: "Readers' favorite books about %{phrase}, with ratings, reviews and shelves."
+  rank: 0.45
+- url: https://www.youtube.com/results?search_query=%{plus}
+  title: "%{phrase} - YouTube"
+  snippet: "Enjoy the videos and music you love about %{phrase}, and share it all with friends, family and the world."
+  rank: 0.46
+- url: https://blog.%{joined}.io/posts/%{n}-things-about-%{slug}
+  title: "%{n} Things Nobody Tells You About %{Title}"
+  snippet: "After years with %{phrase}, here are the small things that make the biggest difference."
+  rank: 0.48
+- url: https://dev.to/%{word}/a-beginners-guide-to-%{slug}-%{id}
+  title: "A Beginner's Guide to %{Title} - DEV Community"
+  snippet: "If you have never touched %{phrase} before, this post walks you through it step by step."
+  rank: 0.49
+- url: https://www.etsy.com/market/%{under}
+  title: "%{Title} - Etsy"
+  snippet: "Check out our %{phrase} selection for the very best in unique or custom, handmade pieces from our shops."
+  rank: 0.51
+- url: https://www.bbc.com/news/topics/%{id}
+  title: "%{Title} - BBC News"
+  snippet: "Get the latest on %{phrase}: breaking news, features and analysis from the BBC."
+  rank: 0.52
+- url: https://www.tripadvisor.com/Search?q=%{plus}
+  title: "%{Title}: Reviews and Tips - Tripadvisor"
+  snippet: "Read traveler reviews and tips about %{phrase}, and see photos from people who have been."
+  rank: 0.54
+- url: https://www.imdb.com/find/?q=%{plus}
+  title: "%{Title} - IMDb"
+  snippet: "Titles, people and keywords matching %{phrase}."
+  rank: 0.55
+- url: https://%{slug}.net/faq
+  title: "%{Title} FAQ: Your Questions Answered"
+  snippet: "Straight answers to the most common questions about %{phrase}. Can't find yours? Send it in."
+  rank: 0.56
+- url: https://www.coursera.org/courses?query=%{plus}
+  title: "Best %{Title} Courses Online | Coursera"
+  snippet: "Learn %{phrase} with online courses from top universities and companies. Enroll for free, earn a certificate."
+  rank: 0.58
+- url: https://www.ebay.com/sch/i.html?_nkw=%{plus}
+  title: "%{phrase} for sale | eBay"
+  snippet: "Get the best deals on %{phrase} when you shop the largest online selection at eBay.com."
+  rank: 0.59
+- url: https://www.facebook.com/groups/%{joined}fans/
+  title: "%{Title} Fans | Facebook"
+  snippet: "A group for anyone who loves %{phrase}. %{n},%{n}00 members. Say hello and share your favorites."
+  rank: 0.6
+- url: https://x.com/search?q=%{plus}
+  title: "%{phrase} - Search / X"
+  snippet: "See posts about %{phrase} on X. Join the conversation."
+  rank: 0.62
+- url: https://www.instagram.com/explore/tags/%{joined}/
+  title: "#%{joined} • Instagram photos and videos"
+  snippet: "%{n}%{n}K posts - See Instagram photos and videos from '%{joined}' hashtag."
+  rank: 0.63
+- url: https://www.tiktok.com/discover/%{slug}
+  title: "%{phrase} | TikTok"
+  snippet: "Discover videos related to %{phrase} on TikTok. See more videos about %{phrase}."
+  rank: 0.64
+- url: https://www.theverge.com/search?q=%{plus}
+  title: "%{Title} - The Verge"
+  snippet: "Stories about %{phrase} from The Verge: news, reviews and features."
+  rank: 0.65
+- url: https://www.npr.org/search?query=%{plus}
+  title: "%{Title} : NPR"
+  snippet: "Listen to stories and read coverage of %{phrase} from NPR."
+  rank: 0.66
+- url: https://www.wired.com/tag/%{slug}/
+  title: "%{Title} | WIRED"
+  snippet: "The latest news, stories and ideas about %{phrase} from WIRED."
+  rank: 0.67
+- url: https://www.%{word}hub.com/forum/%{slug}
+  title: "%{Title} Forum - %{word}hub"
+  snippet: "Join the discussion about %{phrase}. Newest threads: tips for beginners, favorite setups, and what to avoid."
+  rank: 0.68
+- url: https://www.producthunt.com/search?q=%{plus}
+  title: "Best %{Title} Tools | Product Hunt"
+  snippet: "Discover new products related to %{phrase}, ranked by the community."
+  rank: 0.7
+- url: https://archive.org/search?query=%{plus}
+  title: "Search results for %{phrase} : Internet Archive"
+  snippet: "Books, audio, video and web pages about %{phrase}, free to borrow and download."
+  rank: 0.71
+- url: https://www.udemy.com/topic/%{slug}/
+  title: "Top %{Title} Courses Online - Updated | Udemy"
+  snippet: "Learn %{phrase} from top-rated instructors. Find the right course for you."
+  rank: 0.72
+- url: https://www.khanacademy.org/search?page_search_query=%{plus}
+  title: "%{phrase} | Khan Academy"
+  snippet: "Free lessons and practice on %{phrase} and related topics."
+  rank: 0.73
+- url: https://%{joined}.substack.com/p/%{slug}
+  title: "On %{Title} - by a Substack writer"
+  snippet: "A weekly letter about %{phrase}. This week: what the numbers say and what they leave out."
+  rank: 0.74
+- url: https://www.cnet.com/search/?query=%{plus}
+  title: "%{Title} Reviews, News and Buying Advice - CNET"
+  snippet: "Expert reviews and advice on %{phrase}, so you can decide what is worth it."
+  rank: 0.75
+- url: https://www.walmart.com/search?q=%{plus}
+  title: "%{phrase} - Walmart.com"
+  snippet: "Shop for %{phrase} at Walmart.com. Save money. Live better."
+  rank: 0.76
+- url: https://www.yelp.com/search?find_desc=%{plus}
+  title: "Top %{n}0 Best %{Title} Near You - Yelp"
+  snippet: "Find the best %{phrase} near you on Yelp, with reviews and ratings from locals."
+  rank: 0.77
+- url: https://open.spotify.com/search/%{slug}
+  title: "%{Title} | Spotify"
+  snippet: "Listen to podcasts, playlists and songs about %{phrase} on Spotify."
+  rank: 0.78
+- url: https://podcasts.apple.com/us/podcast/the-%{slug}-podcast/id%{n}%{n}%{n}%{n}%{n}%{n}
+  title: "The %{Title} Podcast - Apple Podcasts"
+  snippet: "Conversations about %{phrase} with the people who know it best. New episodes every week."
+  rank: 0.79
+- url: https://www.meetup.com/find/?keywords=%{plus}
+  title: "%{Title} Groups | Meetup"
+  snippet: "Find %{phrase} groups near you and meet people who share your interest."
+  rank: 0.8
+- url: https://www.eventbrite.com/d/online/%{slug}/
+  title: "%{Title} Events | Eventbrite"
+  snippet: "Discover upcoming %{phrase} events, online and in person."
+  rank: 0.81
+- url: https://play.google.com/store/search?q=%{plus}&c=apps
+  title: "%{phrase} - Apps on Google Play"
+  snippet: "Apps for %{phrase}: browse, compare ratings and install."
+  rank: 0.82
+- url: https://apps.apple.com/us/app/%{slug}/id%{n}%{n}%{n}%{n}%{n}%{n}%{n}
+  title: "%{Title} on the App Store"
+  snippet: "Download %{Title} for iPhone and iPad. Read reviews, compare ratings and see screenshots."
+  rank: 0.83
+- url: https://www.investopedia.com/terms/%{word}.asp
+  title: "%{Title}: Definition and How It Works - Investopedia"
+  snippet: "What %{phrase} means, how it works, and examples, explained in plain language."
+  rank: 0.84
+- url: https://www.indeed.com/q-%{slug}-jobs.html
+  title: "%{Title} Jobs, Employment | Indeed"
+  snippet: "%{n}%{n} %{phrase} jobs available. See salaries, compare reviews, easily apply, and get hired."
+  rank: 0.85
+- url: https://www.bloomberg.com/search?query=%{plus}
+  title: "%{Title} - Bloomberg"
+  snippet: "Bloomberg delivers business and markets news, data and analysis on %{phrase}."
+  rank: 0.86
+- url: https://www.nationalgeographic.com/search?q=%{plus}
+  title: "%{Title} | National Geographic"
+  snippet: "Explore %{phrase} with stories, photos and videos from National Geographic."
+  rank: 0.87
+- url: https://www.twitch.tv/directory/category/%{slug}
+  title: "%{Title} - Twitch"
+  snippet: "Watch live streams about %{phrase} on Twitch."
+  rank: 0.88
+- url: https://store.steampowered.com/search/?term=%{plus}
+  title: "Search results for %{phrase} - Steam"
+  snippet: "Games and software matching %{phrase} on Steam."
+  rank: 0.89
+- url: https://boardgamegeek.com/geeksearch.php?q=%{plus}
+  title: "%{Title} | BoardGameGeek"
+  snippet: "Search results for %{phrase}: games, forums and files from the BoardGameGeek community."
+  rank: 0.9
+- url: https://www.pcmag.com/search/results?query=%{plus}
+  title: "%{Title} - PCMag"
+  snippet: "Tech reviews, news and buying guides for %{phrase}."
+  rank: 0.91
+- url: https://www.wsj.com/search?query=%{plus}
+  title: "%{Title} - WSJ"
+  snippet: "Articles and analysis about %{phrase} from The Wall Street Journal."
+  rank: 0.92
+- url: https://www.glassdoor.com/Search/results.htm?keyword=%{plus}
+  title: "%{Title} Companies and Reviews | Glassdoor"
+  snippet: "See what people say about working in %{phrase}: salaries, reviews and interview questions."
+  rank: 0.93
+- url: https://www.target.com/s?searchTerm=%{plus}
+  title: "%{phrase} : Target"
+  snippet: "Shop Target for %{phrase} you will love at great low prices."
+  rank: 0.94
+- url: https://www.bestbuy.com/site/searchpage.jsp?st=%{plus}
+  title: "%{phrase} - Best Buy"
+  snippet: "Shop %{phrase} at Best Buy. Find low everyday prices and buy online for delivery or in-store pick-up."
+  rank: 0.95
+- url: https://%{word}-forum.net/t/%{slug}/%{n}%{n}%{n}
+  title: "Thread: %{Title} Questions - %{word} forum"
+  snippet: "Long-time members answer common questions about %{phrase}. Read before posting."
+  rank: 0.96
+- url: https://www.nerdwallet.com/search?q=%{plus}
+  title: "%{Title} | NerdWallet"
+  snippet: "Compare options for %{phrase} and find what fits your budget."
+  rank: 0.97
+- url: https://www.pinterest.com/search/pins/?q=%{plus}
+  title: "%{phrase} - Pinterest"
+  snippet: "Discover recipes, home ideas, style inspiration and other ideas to try about %{phrase}."
+  rank: 0.98
+- url: https://www.reddit.com/search/?q=%{plus}
+  title: "%{phrase} - Reddit Search"
+  snippet: "Posts and communities about %{phrase} on Reddit."
+  rank: 0.99

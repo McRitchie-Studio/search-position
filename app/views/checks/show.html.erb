@@ -1,0 +1,95 @@
+<% if @check&.valid? %>
+  <% content_for :title, "#{@check.found? ? "##{@check.position}" : "Not in top #{@check.result_count}"} for #{quoted(@check.phrase)} · Search Position" %>
+<% end %>
+
+<header class="masthead">
+  <p class="eyebrow">Search Position</p>
+  <h1>Where does your site rank?</h1>
+  <p class="lede">
+    Type a search phrase and your site's address. You get the site's position in the
+    top <%= DemoSearch::RESULT_COUNT %> results, then the whole list with your site highlighted.
+  </p>
+</header>
+
+<% errors = @check ? @check.errors : {} %>
+<form class="check-form" action="<%= root_path %>" method="get" role="search" aria-label="Check a search position" data-check-form>
+  <div class="field">
+    <label for="search">Search phrase</label>
+    <input type="text" id="search" name="search" value="<%= @search %>" placeholder="cyvasse game"
+           maxlength="<%= SearchPhrase::MAX_LENGTH %>" autocomplete="off" enterkeyhint="next"
+           <% if errors[:phrase] %>aria-invalid="true" aria-describedby="search-error"<% end %>
+           <% unless @check %>autofocus<% end %>>
+    <% if errors[:phrase] %><p class="field__error" id="search-error"><%= errors[:phrase] %></p><% end %>
+  </div>
+  <div class="field">
+    <label for="url">Your site</label>
+    <input type="text" id="url" name="url" value="<%= @url %>" placeholder="cyvasse.io"
+           maxlength="<%= SiteAddress::MAX_LENGTH %>" inputmode="url" autocapitalize="off"
+           autocorrect="off" spellcheck="false" autocomplete="url" enterkeyhint="search"
+           <% if errors[:site] %>aria-invalid="true" aria-describedby="url-error"<% end %>>
+    <% if errors[:site] %><p class="field__error" id="url-error"><%= errors[:site] %></p><% end %>
+  </div>
+  <button type="submit" class="button">Check position</button>
+</form>
+
+<p class="examples">
+  <span class="examples__label">Try</span>
+  <% ChecksController::EXAMPLES.each do |example| %>
+    <%= link_to root_path(example), class: "chip" do %><%= example[:search] %> <span class="chip__site"><%= example[:url] %></span><% end %>
+  <% end %>
+</p>
+
+<% if @check&.valid? %>
+  <section class="readout <%= @check.found? ? "readout--found" : "readout--missing" %>" aria-labelledby="readout-heading" data-readout>
+    <% if @check.found? %>
+      <p class="readout__number" aria-hidden="true">#<%= @check.position %></p>
+      <div>
+        <h2 id="readout-heading" class="readout__heading">
+          <span class="readout__site"><%= @check.site %></span> is <%= ordinal(@check.position) %> for <%= quoted(@check.phrase) %>
+        </h2>
+        <p class="readout__detail">
+          Page <%= @check.results[@check.position - 1].page %> of results.
+          <% others = @check.matches.drop(1).map(&:position) %>
+          <% if others.any? %>Also at <%= others.to_sentence %>.<% end %>
+          <a href="#result-<%= @check.position %>">Jump to it</a>
+        </p>
+      </div>
+    <% else %>
+      <p class="readout__number readout__number--none" aria-hidden="true">–</p>
+      <div>
+        <h2 id="readout-heading" class="readout__heading">
+          <span class="readout__site"><%= @check.site %></span> is not in the first <%= @check.result_count %> results
+        </h2>
+        <p class="readout__detail">for <%= quoted(@check.phrase) %>. The full list is below.</p>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="results" aria-labelledby="results-heading">
+    <h2 id="results-heading" class="results__heading">Top <%= @check.result_count %> results for <%= quoted(@check.phrase) %></h2>
+    <p class="results__note">
+      Demo results, generated from your phrase. Nothing here came from Google, and the
+      addresses are made up, so they are not links.
+    </p>
+
+    <% @check.results.each_slice(10).with_index(1) do |page_results, page| %>
+      <h3 class="results__page">Page <%= page %></h3>
+      <ol class="results__list" start="<%= page_results.first.position %>">
+        <% page_results.each do |result| %>
+          <li id="result-<%= result.position %>" class="result<%= " result--yours" if result.yours? %>" <%= "data-yours" if result.yours? %>>
+            <span class="result__position" aria-hidden="true"><%= result.position %></span>
+            <div class="result__body">
+              <p class="result__crumb">
+                <span class="result__icon" aria-hidden="true"><%= result.breadcrumb.first.upcase %></span>
+                <span class="result__address"><%= result.breadcrumb %></span>
+                <% if result.yours? %><span class="badge">Your site</span><% end %>
+              </p>
+              <p class="result__title"><%= result.title %></p>
+              <p class="result__snippet"><%= result.snippet %></p>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </section>
+<% end %>
