@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <title><%= content_for(:title) || "Alex McRitchie" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Alex McRitchie's projects since 2014, with links to the code and to live showcase rebuilds.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+    <meta name="application-name" content="Alex McRitchie">
+    <meta property="og:title" content="Alex McRitchie — Projects">
+    <meta property="og:description" content="Web apps since 2014, with links to the code and to live showcase rebuilds.">
+    <meta property="og:type" content="website">
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="page">
+      <%= yield %>
+    </div>
+  </body>
+</html>
